@@ -1,0 +1,17 @@
+spring:
+    application:
+        name: datafaker
+    datasource:
+        url: jdbc:h2:mem:datafakerdb
+        username: sa
+        password: 123
+    jpa:
+        show-sql: true
+        hibernate:
+            ddl-auto: update
+    output:
+        ansi:
+            enabled: always
+
+data-initializer:
+    count: 100
