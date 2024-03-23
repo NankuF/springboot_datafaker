@@ -50,6 +50,9 @@ dependencies {
 	// An annotation processor for generating type-safe bean mappers
     annotationProcessor("org.mapstruct:mapstruct-processor:1.5.5.Final")
 
+	// JsonNullable wrapper class and Jackson module to support fields with meaningful null values
+	implementation("org.openapitools:jackson-databind-nullable:0.2.6")
+
 	// Starter for testing Spring Boot applications with libraries including JUnit Jupiter, Hamcrest and Mockito
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	// package from testing spring security
