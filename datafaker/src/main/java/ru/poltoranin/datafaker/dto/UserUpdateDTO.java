@@ -1,6 +1,7 @@
 package ru.poltoranin.datafaker.dto;
 
 import org.openapitools.jackson.nullable.JsonNullable;
+import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,4 +13,6 @@ public class UserUpdateDTO {
     private JsonNullable<String> firstName;
     @NotBlank
     private JsonNullable<String> lastName;
+    @Email
+    private JsonNullable<String> email;
 }

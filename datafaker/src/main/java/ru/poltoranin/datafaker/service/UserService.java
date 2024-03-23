@@ -2,6 +2,7 @@ package ru.poltoranin.datafaker.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import ru.poltoranin.datafaker.dto.UserCreateDTO;
 import ru.poltoranin.datafaker.dto.UserDTO;
 import ru.poltoranin.datafaker.dto.UserUpdateDTO;
 import ru.poltoranin.datafaker.exception.ResourceNotFoundException;
@@ -23,10 +24,33 @@ public class UserService {
         return users.stream().map(userMapper::map).toList();
     }
 
+    public UserDTO getUserById(Long id) {
+        var user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User with id " + id + " not found"));
+        return userMapper.map(user);
+    }
+
+    public UserDTO getUserByEmail(String email) {
+        var user = userRepository.findByEmail(email).orElseThrow(
+                () -> new ResourceNotFoundException("User with email " + email + " not found"));
+        return userMapper.map(user);
+    }
+
+    public UserDTO saveUser(UserCreateDTO userData) {
+        var user = userMapper.map(userData);
+        userRepository.save(user);
+        return userMapper.map(user);
+    }
+
     public UserDTO updateUser(Long id, UserUpdateDTO userData) {
-        var user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User with id" + id + "not found"));
+        var user = userRepository.findById(id).orElseThrow(
+                () -> new ResourceNotFoundException("User with id " + id + " not found"));
         userMapper.update(userData, user);
         userRepository.save(user);
         return userMapper.map(user);
+    }
+
+    public void deleteUserById(Long id) {
+        userRepository.deleteById(id);
     }
 }

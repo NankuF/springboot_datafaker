@@ -35,6 +35,7 @@ public class DataInitializer implements ApplicationRunner {
             var userData = new UserCreateDTO();
             userData.setFirstName(faker.name().firstName());
             userData.setLastName(faker.name().lastName());
+            userData.setEmail(faker.internet().emailAddress());
             var user = userMapper.map(userData);
             users.add(user);
         }

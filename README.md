@@ -31,3 +31,10 @@ Mapper - класс, задающий правила автоматическо�
     - create handler `GlobalExceptionHandler`.
     - create exception `ResourceNotFoundException`.
     - use this exception in controllers or service.
+5. Поиск юзера по емайлу.<br>
+   Необходимо:
+   - add `email` field with `@Email` in `User` model.
+   - add `findByEmail` method in `UserRepository`.
+   - add `getUserByEmail` method in `UserService`.
+   - add email in all user DTO's.
+   - add new controller.
