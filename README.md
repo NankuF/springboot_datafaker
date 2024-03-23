@@ -26,3 +26,8 @@ Mapper - класс, задающий правила автоматическо�
     - modify `UserDTO`.
     - modify `User` model, added fields `createdAt` and `updatedAt` with `@CreatedDate` and `@LastModifiedDate`.
     - set @EntityListeners(AuditingEntityListener.class) on `User` model.
+4. Перехват ошибок с помощью Advice.<br>
+    Необходимо:
+    - create handler `GlobalExceptionHandler`.
+    - create exception `ResourceNotFoundException`.
+    - use this exception in controllers or service.

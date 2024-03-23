@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ru.poltoranin.datafaker.dto.UserDTO;
 import ru.poltoranin.datafaker.dto.UserUpdateDTO;
+import ru.poltoranin.datafaker.exception.ResourceNotFoundException;
 import ru.poltoranin.datafaker.mapper.UserMapper;
 import ru.poltoranin.datafaker.repository.UserRepository;
 import java.util.List;
@@ -23,7 +24,7 @@ public class UserService {
     }
 
     public UserDTO updateUser(Long id, UserUpdateDTO userData) {
-        var user = userRepository.findById(id).orElseThrow();
+        var user = userRepository.findById(id).orElseThrow(()-> new ResourceNotFoundException("User with id" + id + "not found"));
         userMapper.update(userData, user);
         userRepository.save(user);
         return userMapper.map(user);
