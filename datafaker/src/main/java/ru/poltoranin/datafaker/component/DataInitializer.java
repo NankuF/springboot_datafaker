@@ -36,9 +36,19 @@ public class DataInitializer implements ApplicationRunner {
             userData.setFirstName(faker.name().firstName());
             userData.setLastName(faker.name().lastName());
             userData.setEmail(faker.internet().emailAddress());
+            userData.setPasswordDigest("123");
             var user = userMapper.map(userData);
             users.add(user);
         }
+
+        var userData = new UserCreateDTO();
+        userData.setFirstName(faker.name().firstName());
+        userData.setLastName(faker.name().lastName());
+        userData.setEmail("admin@admin.ru");
+        userData.setPasswordDigest("123");
+        var user = userMapper.map(userData);
+        users.add(user);
+
         userRepository.saveAll(users);
     }
 }

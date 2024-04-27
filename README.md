@@ -1,4 +1,7 @@
 # springboot_datafaker
+Учебный проект по созданию базового функционала в springboot.
+Внимание! в `resources/certs/` лежат ключи `*.pem`. В настоящем проекте они должны быть добавлены в `.gitignore`!
+
 
 Сущность - обычно подразумевается класс, отражающий таблицу из БД.
 DTO - data transfer object. Паттерн, подразумевающий создание классов, инкапсулирующих в себя поля, которые необходимо получить, создать, обновить (create, read, update)
@@ -48,3 +51,54 @@ By default `?page=1`<br>
     - add `JpaSpecificationExecutor<User>` in `UserRepository`.
     - implements filter in `UserSpecification`.
     - create `UserParamsDTO` as filter params.
+7. Авторизация.<br>
+   Необходимо:
+   - install dependency.
+   - update `User` model, implements `UserDetails`.
+   - create `CustomUserDetailsService` as CRUD for users.
+   - add `passwordEncoder` bean for hashing password in `EncodersConfig`.
+   - create `SecurityConfig` where using `passwordEncoder` and `CustomUserDetailsService`.
+   - create `JWTUtils` for generic jwt token.
+   - create rsa keys and `RsaKeyProperties`. Dont push `private.pem` to git! This for only example.
+    ```bash
+    # datafaker/src/main/resources/certs
+    openssl genpkey -out private.pem -algorithm RSA -pkeyopt rsa_keygen_bits:2048 &&\
+    openssl rsa -in private.pem -pubout -out public.pem
+    ```
+   - create `AuthRequestDTO`
+   - create `AuthenticationController`.
+   - add security filter for urls in `SecurityConfig`.
+   - create `UserUtils` with `getCurrentUser` method for get authenticated user.
+   - add `passwordDigest` in `UserCreateDTO`.
+   - add `encryptPassword` method in `UserMapper`.
+   - check generate token.
+    ```bash
+    curl -X POST -H "content-type:application/json" -d '{"username":"admin@admin.ru", "password": "123"}' http://localhost:8080/api/login
+    ```
+    - check get users with token.
+    ```bash
+    curl -H "content-type:application/json" -H "authorization:bearer <token>" http://localhost:8080/api/users
+    ```
+
+
+Other commands (before create authentication):<br>
+Get all users
+```bash
+curl http://localhost:8080/api/users
+```
+Get user by id
+```bash
+curl http://localhost:8080/api/users/1
+```
+Create User
+```bash
+curl -X POST -H "content-type:application/json" -d '{"firstName":"Bob", "lastName":"Marley"}' http://localhost:8080/api/users
+```
+Partial update user (JsonNullable)
+```bash
+curl -X PUT -H 'content-type:application/json' -d '{"lastName":"Hello"}' http://localhost:8080/api/users/1
+```
+Full update user
+```bash
+curl -X PUT -H 'content-type:application/json' -d '{"firstName":"NewFirstName", "lastName":"NewLastName"}' http://localhost:8080/api/users/1
+```

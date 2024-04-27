@@ -24,9 +24,9 @@ repositories {
 
 dependencies {
 	// Starter for using Spring Security's OAuth2 resource server features
-	// implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+	implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 	// Starter for using Spring Security
-	// implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.springframework.boot:spring-boot-starter-security'
 	// Core starter, including auto-configuration support, logging and YAML
 	implementation("org.springframework.boot:spring-boot-starter")
 	// Starter for building web, including RESTful,
